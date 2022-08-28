@@ -1,6 +1,50 @@
-import { pool } from '../configs/db'
+export const createCommentsTable = function (pool: any) {
 
-export const getComment = (res: any, req: any) => {
+    const commentsTableDuplicationQuery = `SELECT table_name
+        FROM information_schema.tables
+        WHERE table_schema = "coym"
+        AND table_name = "comments"
+    `
+
+    const createCommentsTableQuery = `CREATE TABLE IF NOT EXISTS 
+        comments (
+            id INT AUTO_INCREMENT, 
+            comment TEXT, 
+            majorID INT, 
+            userID INT, 
+            createdAt DATETIME NOT NULL,
+            updatedAt DATETIME,
+            PRIMARY KEY (id),
+            FOREIGN KEY (majorID) REFERENCES majors(id),
+            FOREIGN KEY (userID) REFERENCES accounts(id)
+        ) 
+    `
+
+    pool.getConnection(function (err: any, connection: any) {
+        if (err) {
+            connection.release()
+            throw err
+        }
+        connection.query(commentsTableDuplicationQuery, function (err: any, result: any) {
+            if (err) {
+                connection.release()
+                throw err
+            }
+            if (!result.length) {
+                connection.query(createCommentsTableQuery, function (err: any, result: any) {
+                    if (err) {
+                        connection.release()
+                        throw err
+                    }
+                })
+            }
+        })
+        connection.release()
+    })
+
+}
+
+export const getComment = function (pool: any, res: any, req: any) {
 
     const selectCommentsTableQuery = `SELECT a.id, a.username, c.comment, c.createdAt, c.id AS commentID, m.name FROM comments c
         inner join accounts a on a.id = c.userID
@@ -30,7 +74,7 @@ export const getComment = (res: any, req: any) => {
 
 }
 
-export const getCommentCount = (res: any, req: any) => {
+export const getCommentCount = function (pool: any, res: any, req: any) {
 
     const selectCommentsTableQuery = `SELECT m.id, m.name FROM comments c
         inner join majors m on m.id = c.majorID
@@ -56,7 +100,7 @@ export const getCommentCount = (res: any, req: any) => {
 
 }
 
-export const getTotalCommentCount = (res: any, req: any) => {
+export const getTotalCommentCount = function (pool: any, res: any, req: any) {
 
     const selectCommentsTableQuery = `SELECT COUNT(*) FROM comments`
 
@@ -80,7 +124,7 @@ export const getTotalCommentCount = (res: any, req: any) => {
 
 }
 
-export const postComment = (res: any, req: any) => {
+export const postComment = function (pool: any, res: any, req: any) {
 
     const insertCommentsTableQuery = `INSERT INTO 
         comments (
@@ -117,7 +161,7 @@ export const postComment = (res: any, req: any) => {
 
 }
 
-export const editComment = (res: any, req: any) => {
+export const editComment = function (pool: any, res: any, req: any) {
 
     const selectCommentsTableQuery = `SELECT comment FROM comments 
         WHERE majorID = ?
@@ -169,7 +213,7 @@ export const editComment = (res: any, req: any) => {
 
 }
 
-export const deleteComment = (res: any, req: any) => {
+export const deleteComment = function (pool: any, res: any, req: any) {
 
     const selectCommentsTableQuery = `SELECT comment FROM comments 
         WHERE id = ?

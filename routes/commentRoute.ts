@@ -1,12 +1,29 @@
 import { getComment, postComment, getCommentCount, editComment, deleteComment, getTotalCommentCount } from '../models/commentModel'
+import { pool } from '../configs/db'
 import express from 'express'
-const router = express.Router()
-
-router.get('/getComment/:id', function (req, res) { getComment(res, req) })
-router.post('/postComment/:id', function (req, res) { postComment(res, req) })
-router.get('/getCommentCount', function (req, res) { getCommentCount(res, req) })
-router.post('/editComment/:id', function (req, res) { editComment(res, req) })
-router.post('/deleteComment/:id', function (req, res) { deleteComment(res, req) })
-router.get('/getTotalCommentCount', function (req, res) { getTotalCommentCount(res, req) })
-
+export const router = express.Router()
 export default router
+
+router.get('/getComment/:id', function (req: any, res: any) {
+  getComment(pool, res, req)
+})
+
+router.post('/postComment/:id', function (req: any, res: any) {
+  postComment(pool, res, req)
+})
+
+router.get('/getCommentCount', function (req: any, res: any) {
+  getCommentCount(pool, res, req)
+})
+
+router.post('/editComment/:id', function (req: any, res: any) {
+  editComment(pool, res, req)
+})
+
+router.post('/deleteComment/:id', function (req: any, res: any) {
+  deleteComment(pool, res, req)
+})
+
+router.get('/getTotalCommentCount', function (req: any, res:any) {
+  getTotalCommentCount(pool, res, req)
+})

@@ -1,6 +1,49 @@
-import { pool } from '../configs/db'
+export const createLikesTable = function (pool: any) {
 
-export const postLike = (res: any, req: any) => {
+    const likesTableDuplicationQuery = `SELECT table_name
+        FROM information_schema.tables
+        WHERE table_schema = "coym"
+        AND table_name = "likes"
+    `
+
+    const createLikesQuery = `CREATE TABLE IF NOT EXISTS 
+        likes (
+            id INT AUTO_INCREMENT, 
+            commentID INT NOT NULL, 
+            majorID INT NOT NULL, 
+            userID INT NOT NULL,
+            PRIMARY KEY (id),
+            FOREIGN KEY (commentID) REFERENCES comments(id),
+            FOREIGN KEY (majorID) REFERENCES majors(id),
+            FOREIGN KEY (userID) REFERENCES accounts(id)
+        ) 
+    `
+
+    pool.getConnection(function (err: any, connection: any) {
+        if (err) {
+            connection.release()
+            throw err
+        }
+        connection.query(likesTableDuplicationQuery, function (err: any, result: any) {
+            if (err) {
+                connection.release()
+                throw err
+            }
+            if (!result.length) {
+                connection.query(createLikesQuery, function (err: any, result: any) {
+                    if (err) {
+                        connection.release()
+                        throw err
+                    }
+                })
+            }
+        })
+        connection.release()
+    })
+
+}
+
+export const postLike = function (pool: any, res: any, req: any) {
 
     const selectLikesQuery = `SELECT * FROM likes
         WHERE commentID = ? AND
@@ -69,7 +112,7 @@ export const postLike = (res: any, req: any) => {
 
 }
 
-export const getLike = (res: any, req: any) => {
+export const getLike = function (pool: any, res: any, req: any) {
 
     const selectLikesQuery = `SELECT a.username, m.name, c.comment, c.id AS commentID FROM likes l
         inner join accounts a on a.id = l.userID
@@ -100,7 +143,7 @@ export const getLike = (res: any, req: any) => {
 
 }
 
-export const getLikeCount = (res: any, req: any) => {
+export const getLikeCount = function (pool: any, res: any, req: any) {
 
     const selectLikesQuery = `SELECT m.id, m.name FROM likes l
         inner join majors m on m.id = l.majorID
@@ -126,7 +169,7 @@ export const getLikeCount = (res: any, req: any) => {
 
 }
 
-export const getTotalLikeCount = (res: any, req: any) => {
+export const getTotalLikeCount = function (pool: any, res: any, req: any) {
 
     const selectLikesQuery = `SELECT COUNT(*) FROM likes`
 

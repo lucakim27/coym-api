@@ -1,7 +1,9 @@
 import { postRequest } from '../models/requestModel'
+import { pool } from '../configs/db'
 import express from 'express'
-const router = express.Router()
-
-router.post('/postRequest', function (req, res) { postRequest(res, req) })
-
+export const router = express.Router()
 export default router
+
+router.post('/postRequest', function (req: any, res: any) {
+  postRequest(pool, res, req)
+})

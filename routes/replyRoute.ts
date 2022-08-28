@@ -1,12 +1,29 @@
 import { getReply, postReply, getReplyCount, editReply, deleteReply, getTotalReplyCount } from '../models/replyModel'
+import { pool } from '../configs/db'
 import express from 'express'
-const router = express.Router()
-
-router.get('/getReply/:id', function (req, res) { getReply(res, req) })
-router.post('/postReply/:id', function (req, res) { postReply(res, req) })
-router.get('/getReplyCount', function (req, res) { getReplyCount(res, req) })
-router.post('/deleteReply/:id', function (req, res) { deleteReply(res, req) })
-router.post('/editReply/:id', function (req, res) { editReply(res, req) })
-router.get('/getTotalReplyCount', function (req, res) { getTotalReplyCount(res, req) })
-
+export const router = express.Router()
 export default router
+
+router.get('/getReply/:id', function (req: any, res: any) {
+  getReply(pool, res, req)
+})
+
+router.post('/postReply/:id', function (req: any, res: any) {
+  postReply(pool, res, req)
+})
+
+router.get('/getReplyCount', function (req: any, res: any) {
+  getReplyCount(pool, res, req)
+})
+
+router.post('/deleteReply/:id', function (req: any, res: any) {
+  deleteReply(pool, res, req)
+})
+
+router.post('/editReply/:id', function (req: any, res: any) {
+  editReply(pool, res, req)
+})
+
+router.get('/getTotalReplyCount', function (req: any, res:any) {
+  getTotalReplyCount(pool, res, req)
+})

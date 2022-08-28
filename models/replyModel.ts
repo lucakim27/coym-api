@@ -1,6 +1,52 @@
-import { pool } from '../configs/db'
+export const createReplyTable = function (pool: any) {
 
-export const getReply = (res: any, req: any) => {
+    const replyTableDuplicationQuery = `SELECT table_name
+        FROM information_schema.tables
+        WHERE table_schema = 'coym'
+        AND table_name = 'reply'
+    `
+
+    const createReplyQuery = `CREATE TABLE IF NOT EXISTS 
+        reply (
+            id INT AUTO_INCREMENT, 
+            majorID INT NOT NULL, 
+            userID INT NOT NULL, 
+            commentID INT NOT NULL, 
+            reply TEXT NOT NULL, 
+            createdAt DATETIME NOT NULL,
+            updatedAt DATETIME,
+            PRIMARY KEY (id),
+            FOREIGN KEY (majorID) REFERENCES majors(id),
+            FOREIGN KEY (userID) REFERENCES accounts(id),
+            FOREIGN KEY (commentID) REFERENCES comments(id)
+        )
+    `
+
+    pool.getConnection(function (err: any, connection: any) {
+        if (err) {
+            connection.release()
+            throw err
+        }
+        connection.query(replyTableDuplicationQuery, function (err: any, result: any) {
+            if (err) {
+                connection.release()
+                throw err
+            }
+            if (!result.length) {
+                connection.query(createReplyQuery, function (err: any, result: any) {
+                    if (err) {
+                        connection.release()
+                        throw err
+                    }
+                })
+            }
+        })
+        connection.release()
+    })
+
+}
+
+export const getReply = function (pool: any, res: any, req: any) {
 
     const selectReplyQuery = `SELECT a.id, a.username, c.id AS commentID, c.comment, r.reply, m.name, r.createdAt, r.id AS replyID FROM reply r
         inner join accounts a on a.id = r.userID
@@ -31,7 +77,7 @@ export const getReply = (res: any, req: any) => {
 
 }
 
-export const getReplyCount = (res: any, req: any) => {
+export const getReplyCount = function (pool: any, res: any, req: any) {
 
     const selectReplyQuery = `SELECT m.id, m.name FROM reply r
         inner join majors m on m.id = r.majorID
@@ -57,7 +103,7 @@ export const getReplyCount = (res: any, req: any) => {
 
 }
 
-export const getTotalReplyCount = (res: any, req: any) => {
+export const getTotalReplyCount = function (pool: any, res: any, req: any) {
 
     const selectReplyQuery = `SELECT COUNT(*) FROM reply`
 
@@ -81,7 +127,7 @@ export const getTotalReplyCount = (res: any, req: any) => {
 
 }
 
-export const postReply = (res: any, req: any) => {
+export const postReply = function (pool: any, res: any, req: any) {
 
     const insertReplyQuery = `INSERT INTO 
         reply (
@@ -121,7 +167,7 @@ export const postReply = (res: any, req: any) => {
 
 }
 
-export const editReply = (res: any, req: any) => {
+export const editReply = function (pool: any, res: any, req: any) {
 
     const updateCommentsQuery = `UPDATE reply
         SET reply = ?,
@@ -150,7 +196,7 @@ export const editReply = (res: any, req: any) => {
 
 }
 
-export const deleteReply = (res: any, req: any) => {
+export const deleteReply = function (pool: any, res: any, req: any) {
 
     const selectCommentsTableQuery = `SELECT reply FROM reply 
         WHERE id = ?
