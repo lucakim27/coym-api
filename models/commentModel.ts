@@ -76,7 +76,7 @@ export const getComment = function (pool: any, res: any, req: any) {
 
 export const getCommentCount = function (pool: any, res: any, req: any) {
 
-    const selectCommentsTableQuery = `SELECT m.id, m.name FROM comments c
+    const selectCommentsTableQuery = `SELECT COUNT(m.name) FROM comments c
         inner join majors m on m.id = c.majorID
     `
 

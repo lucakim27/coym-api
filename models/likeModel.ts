@@ -145,7 +145,7 @@ export const getLike = function (pool: any, res: any, req: any) {
 
 export const getLikeCount = function (pool: any, res: any, req: any) {
 
-    const selectLikesQuery = `SELECT m.id, m.name FROM likes l
+    const selectLikesQuery = `SELECT COUNT(m.name) FROM likes l
         inner join majors m on m.id = l.majorID
     `
 

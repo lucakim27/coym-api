@@ -79,7 +79,7 @@ export const getReply = function (pool: any, res: any, req: any) {
 
 export const getReplyCount = function (pool: any, res: any, req: any) {
 
-    const selectReplyQuery = `SELECT m.id, m.name FROM reply r
+    const selectReplyQuery = `SELECT COUNT(m.name) FROM reply r
         inner join majors m on m.id = r.majorID
     `
 
