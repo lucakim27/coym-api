@@ -1,4 +1,4 @@
-import { getComment, postComment, getCommentCount, editComment, deleteComment, getTotalCommentCount } from '../models/commentModel'
+import { getPopularMajors, getRecentComments, getComment, postComment, getCommentCount, editComment, deleteComment, getTotalCommentCount } from '../models/commentModel'
 import { pool } from '../configs/db'
 import express from 'express'
 export const router = express.Router()
@@ -26,4 +26,12 @@ router.post('/deleteComment/:id', function (req: any, res: any) {
 
 router.get('/getTotalCommentCount', function (req: any, res:any) {
   getTotalCommentCount(pool, res, req)
+})
+
+router.get('/getRecentComments', function (req: any, res:any) {
+  getRecentComments(pool, res, req)
+})
+
+router.get('/getPopularMajors', function (req: any, res:any) {
+  getPopularMajors(pool, res, req)
 })

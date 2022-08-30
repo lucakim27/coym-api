@@ -125,6 +125,63 @@ export const getTotalCommentCount = function (pool: any, res: any, req: any) {
 
 }
 
+export const getPopularMajors = function (pool: any, res: any, req: any) {
+
+    const selectCommentsTableQuery = `SELECT m.name, COUNT(m.name) AS count FROM comments c
+        inner join majors m on m.id = c.majorID
+        GROUP BY m.name
+        ORDER BY count DESC
+        LIMIT 3;
+    `
+
+    pool.getConnection(function (err: any, connection: any) {
+        if (err) {
+            connection.release()
+            throw err
+        }
+        connection.query(selectCommentsTableQuery, function (err: any, result: any, fields: any) {
+            if (err) {
+                connection.release()
+                throw err
+            }
+            res.send({
+                status: true,
+                message: result
+            })
+        })
+        connection.release()
+    })
+
+}
+
+export const getRecentComments = function (pool: any, res: any, req: any) {
+
+    const selectCommentsTableQuery =  `SELECT a.id, a.username, c.comment, c.createdAt, c.id AS commentID, m.name FROM comments c
+        inner join accounts a on a.id = c.userID
+        inner join majors m on m.id = c.majorID
+        ORDER BY c.createdAt DESC LIMIT 3;
+    `
+
+    pool.getConnection(function (err: any, connection: any) {
+        if (err) {
+            connection.release()
+            throw err
+        }
+        connection.query(selectCommentsTableQuery, function (err: any, result: any, fields: any) {
+            if (err) {
+                connection.release()
+                throw err
+            }
+            res.send({
+                status: true,
+                message: result
+            })
+        })
+        connection.release()
+    })
+
+}
+
 export const postComment = function (pool: any, res: any, req: any) {
 
     const insertCommentsTableQuery = `INSERT INTO 
