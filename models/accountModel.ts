@@ -285,7 +285,9 @@ export const getUserDetails = function (pool: any, res: any, req: any) {
                     gender: result[0].gender,
                     country: result[0].country,
                     major: result[0].major,
-                    school: result[0].school
+                    school: result[0].school,
+                    snsType: result[0].snsType,
+                    url: result[0].url
                 }
             })
         })
@@ -302,11 +304,13 @@ export const updateUserDetails = function (pool: any, res: any, req: any) {
             school = ?,
             country = ?,
             major = ?,
-            updatedAt = ?
+            updatedAt = ?,
+            url = ?,
+            sns = ?
         WHERE username = ? AND password = ?
     `
 
-    const paramsForUpdateAllDetailsQuery = [req.body.username, req.body.gender, req.body.school, req.body.country, req.body.major, new Date().toISOString().slice(0, 19).replace('T', ' '), req.body.username, req.body.password]
+    const paramsForUpdateAllDetailsQuery = [req.body.username, req.body.gender, req.body.school, req.body.country, req.body.major, new Date().toISOString().slice(0, 19).replace('T', ' '), req.body.url, req.body.snsType, req.body.username, req.body.password]
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
