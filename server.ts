@@ -5,17 +5,13 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import accountRouter from './routes/accountRoute'
 import commentRouter from './routes/commentRoute'
-// import countRouter from './routes/countRoute'
 import likeRouter from './routes/likeRoute'
 import majorRouter from './routes/majorRoute'
 import replyRouter from './routes/replyRoute'
 import requestRouter from './routes/requestRoute'
 import modulesRouter from './routes/modulesRoute'
+import testRouter from './routes/testRoute'
 import { corsOptions } from './configs/cors'
-import { createTables } from './utils/table'
-// import { connection } from './configs/db'
-// import { addChatUserAndChat, sendChatUser, sendChat } from './models/chatModel'
-// import { addOnlineUser, sendOnlineUsers, removeOnlineUser } from './models/onlineModel'
 
 const app = express()
 const httpServer = http.createServer(app)
@@ -24,8 +20,6 @@ const PORT = process.env.PORT || 3000
 //   console.log('Socket.io Server running on port 3001')
 // })
 // const io = require('socket.io')(socketIoServer)
-
-createTables()
 
 // io.on('connection', function (socket: any) {
 
@@ -62,11 +56,11 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser())
 app.use(accountRouter)
 app.use(commentRouter)
-// app.use(countRouter)
 app.use(likeRouter)
 app.use(majorRouter)
 app.use(replyRouter)
 app.use(requestRouter)
 app.use(modulesRouter)
+app.use(testRouter)
 
 httpServer.listen(PORT, () => console.log(`Http Server running on port ${PORT}.`))
