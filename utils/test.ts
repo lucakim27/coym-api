@@ -98,4 +98,5 @@ export const getTest = function (pool: any, res: any, req: any) {
         })
         connection.release()
     })
+    
 }

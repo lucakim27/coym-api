@@ -294,7 +294,7 @@ export const updateUserDetails = function (pool: any, res: any, req: any) {
 
 export const getAllUsers = function (pool: any, res: any, req: any) {
 
-    const getAllUsers = `SELECT id, username, gender, country, major, school, createdAt FROM accounts`
+    const getAllUsers = `SELECT id, username, gender, country, major, school, createdAt, url, sns FROM accounts`
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
