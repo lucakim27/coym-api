@@ -10,6 +10,9 @@ import majorRouter from './routes/majorRoute'
 import replyRouter from './routes/replyRoute'
 import requestRouter from './routes/requestRoute'
 import modulesRouter from './routes/modulesRoute'
+import moduleCommentRouter from './routes/moduleCommentRoute'
+import moduleLikeRouter from './routes/moduleLikeRoute'
+import moduleReplyRouter from './routes/moduleReplyRoute'
 import testRouter from './routes/testRoute'
 import { corsOptions } from './configs/cors'
 
@@ -62,5 +65,8 @@ app.use(replyRouter)
 app.use(requestRouter)
 app.use(modulesRouter)
 app.use(testRouter)
+app.use(moduleCommentRouter)
+app.use(moduleLikeRouter)
+app.use(moduleReplyRouter)
 
 httpServer.listen(PORT, () => console.log(`Http Server running on port ${PORT}.`))
