@@ -10,4 +10,4 @@ CREATE TABLE reply (
     FOREIGN KEY (majorID) REFERENCES majors(id),
     FOREIGN KEY (userID) REFERENCES accounts(id),
     FOREIGN KEY (commentID) REFERENCES comments(id)
-)
+);

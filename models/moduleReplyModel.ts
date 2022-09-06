@@ -1,4 +1,6 @@
-export const getModuleReply = function (pool: any, res: any, req: any) {
+import { pool } from '../configs/db'
+
+export const getModuleReply = function (res: any, req: any) {
 
     const selectReplyQuery = `SELECT a.id, a.username, c.id AS commentID, c.comment, r.reply, m.name, r.createdAt, r.id AS replyID FROM moduleReply r
         inner join accounts a on a.id = r.userID
@@ -29,7 +31,7 @@ export const getModuleReply = function (pool: any, res: any, req: any) {
 
 }
 
-export const postModuleReply = function (pool: any, res: any, req: any) {
+export const postModuleReply = function (res: any, req: any) {
 
     const insertReplyQuery = `INSERT INTO 
         moduleReply (
@@ -69,7 +71,7 @@ export const postModuleReply = function (pool: any, res: any, req: any) {
 
 }
 
-export const editModuleReply = function (pool: any, res: any, req: any) {
+export const editModuleReply = function (res: any, req: any) {
 
     const updateCommentsQuery = `UPDATE moduleReply
         SET reply = ?,
@@ -98,7 +100,7 @@ export const editModuleReply = function (pool: any, res: any, req: any) {
 
 }
 
-export const deleteModuleReply = function (pool: any, res: any, req: any) {
+export const deleteModuleReply = function (res: any, req: any) {
 
     const selectCommentsTableQuery = `SELECT reply FROM moduleReply 
         WHERE id = ?

@@ -1,4 +1,6 @@
-export const postLike = function (pool: any, res: any, req: any) {
+import { pool } from '../configs/db'
+
+export const postLike = function (res: any, req: any) {
 
     const selectLikesQuery = `SELECT * FROM likes
         WHERE commentID = ? AND
@@ -67,7 +69,7 @@ export const postLike = function (pool: any, res: any, req: any) {
 
 }
 
-export const getLike = function (pool: any, res: any, req: any) {
+export const getLike = function (res: any, req: any) {
 
     const selectLikesQuery = `SELECT a.username, m.name, c.comment, c.id AS commentID FROM likes l
         inner join accounts a on a.id = l.userID
@@ -98,7 +100,7 @@ export const getLike = function (pool: any, res: any, req: any) {
 
 }
 
-export const getLikeCount = function (pool: any, res: any, req: any) {
+export const getLikeCount = function (res: any, req: any) {
 
     const selectLikesQuery = `SELECT m.name, COUNT(m.name) AS count FROM likes l
         inner join majors m on m.id = l.majorID
@@ -125,7 +127,7 @@ export const getLikeCount = function (pool: any, res: any, req: any) {
 
 }
 
-export const getTotalLikeCount = function (pool: any, res: any, req: any) {
+export const getTotalLikeCount = function (res: any, req: any) {
 
     const selectLikesQuery = `SELECT COUNT(*) FROM likes`
 

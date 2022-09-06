@@ -1,4 +1,6 @@
-export const getReply = function (pool: any, res: any, req: any) {
+import { pool } from '../configs/db'
+
+export const getReply = function (res: any, req: any) {
 
     const selectReplyQuery = `SELECT a.id, a.username, c.id AS commentID, c.comment, r.reply, m.name, r.createdAt, r.id AS replyID FROM reply r
         inner join accounts a on a.id = r.userID
@@ -29,7 +31,7 @@ export const getReply = function (pool: any, res: any, req: any) {
 
 }
 
-export const getReplyCount = function (pool: any, res: any, req: any) {
+export const getReplyCount = function (res: any, req: any) {
 
     const selectReplyQuery = `SELECT m.name, COUNT(m.name) AS count FROM reply r
         inner join majors m on m.id = r.majorID
@@ -56,7 +58,7 @@ export const getReplyCount = function (pool: any, res: any, req: any) {
 
 }
 
-export const getTotalReplyCount = function (pool: any, res: any, req: any) {
+export const getTotalReplyCount = function (res: any, req: any) {
 
     const selectReplyQuery = `SELECT COUNT(*) FROM reply`
 
@@ -80,7 +82,7 @@ export const getTotalReplyCount = function (pool: any, res: any, req: any) {
 
 }
 
-export const postReply = function (pool: any, res: any, req: any) {
+export const postReply = function (res: any, req: any) {
 
     const insertReplyQuery = `INSERT INTO 
         reply (
@@ -120,7 +122,7 @@ export const postReply = function (pool: any, res: any, req: any) {
 
 }
 
-export const editReply = function (pool: any, res: any, req: any) {
+export const editReply = function (res: any, req: any) {
 
     const updateCommentsQuery = `UPDATE reply
         SET reply = ?,
@@ -149,7 +151,7 @@ export const editReply = function (pool: any, res: any, req: any) {
 
 }
 
-export const deleteReply = function (pool: any, res: any, req: any) {
+export const deleteReply = function (res: any, req: any) {
 
     const selectCommentsTableQuery = `SELECT reply FROM reply 
         WHERE id = ?

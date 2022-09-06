@@ -1,4 +1,6 @@
-export const postRequest = function (pool: any, res: any, req: any) {
+import { pool } from '../configs/db'
+
+export const postRequest = function (res: any, req: any) {
     
     const insertRequestQuery = `INSERT INTO 
         requests (

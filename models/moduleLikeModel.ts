@@ -1,4 +1,6 @@
-export const postModuleLike = function (pool: any, res: any, req: any) {
+import { pool } from '../configs/db'
+
+export const postModuleLike = function (res: any, req: any) {
 
     const selectLikesQuery = `SELECT * FROM moduleLikes
         WHERE moduleCommentID = ? AND
@@ -67,7 +69,7 @@ export const postModuleLike = function (pool: any, res: any, req: any) {
 
 }
 
-export const getModuleLike = function (pool: any, res: any, req: any) {
+export const getModuleLike = function (res: any, req: any) {
 
     const selectLikesQuery = `SELECT a.username, m.name, c.comment, c.id AS commentID FROM moduleLikes l
         inner join accounts a on a.id = l.userID

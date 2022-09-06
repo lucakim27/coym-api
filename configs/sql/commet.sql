@@ -8,4 +8,4 @@ CREATE TABLE comments (
     PRIMARY KEY (id),
     FOREIGN KEY (majorID) REFERENCES majors(id),
     FOREIGN KEY (userID) REFERENCES accounts(id)
-) 
+);

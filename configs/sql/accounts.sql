@@ -9,4 +9,4 @@ CREATE TABLE accounts (
     createdAt DATETIME NOT NULL,
     updatedAt DATETIME,
     PRIMARY KEY (id)
-)
+);

@@ -2,7 +2,7 @@ CREATE TABLE majors (
     id INT AUTO_INCREMENT, 
     name VARCHAR(255), 
     PRIMARY KEY (id)
-)
+);
 
 INSERT INTO majors (name) 
 VALUES 
@@ -300,4 +300,4 @@ VALUES
 ("Welding Technology"),
 ("Wildlife and Wildlands Management"),
 ("Women Studies"),
-("Zoology")
+("Zoology");

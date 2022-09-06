@@ -1,4 +1,6 @@
-export const getTest = function (pool: any, res: any, req: any) {
+import { pool } from '../configs/db'
+
+export const getTest = function (res: any, req: any) {
 
     const result: any = {
         mbti: [],

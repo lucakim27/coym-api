@@ -1,13 +1,16 @@
-import { getMajorList, getMajorName } from '../models/majorModel'
-import { pool } from '../configs/db'
+import {
+  getMajorList,
+  getMajorName
+} from '../models/majorModel'
 import express from 'express'
-export const router = express.Router()
+const router = express.Router()
+
+router.get('/getMajorList', (req: any, res: any) => {
+  getMajorList(res, req)
+})
+
+router.get('/getMajorName/:id', (req: any, res: any) => {
+  getMajorName(res, req)
+})
+
 export default router
-
-router.get('/getMajorList', function (req: any, res: any) {
-  getMajorList(pool, res, req)
-})
-
-router.get('/getMajorName/:id', function (req: any, res: any) {
-  getMajorName(pool, res, req)
-})

@@ -1,4 +1,6 @@
-export const addAccount = function (pool: any, username: any, password: any) {
+import { pool } from '../configs/db'
+
+export const addAccount = function (username: any, password: any) {
 
     const insertAccountsQuery = `INSERT INTO
         accounts (
@@ -38,7 +40,7 @@ const validateSignUp = function (username: any, password: any, passwordConfirm: 
     }
 }
 
-export const authSignUp = function (pool: any, res: any, req: any) {
+export const authSignUp = function (res: any, req: any) {
 
     const selectAccountsQuery = "SELECT username, password FROM accounts"
 
@@ -70,14 +72,14 @@ export const authSignUp = function (pool: any, res: any, req: any) {
                         }
                     }
                     if (!existing) {
-                        addAccount(pool, req.body.username, req.body.password)
+                        addAccount(req.body.username, req.body.password)
                         res.send({
                             status: true,
                             message: 'Successfully signed up.'
                         })
                     }
                 } else {
-                    addAccount(pool, req.body.username, req.body.password)
+                    addAccount(req.body.username, req.body.password)
                     res.send({
                         status: true,
                         message: 'Successfully signed up.'
@@ -90,7 +92,7 @@ export const authSignUp = function (pool: any, res: any, req: any) {
     }
 }
 
-export const authSignIn = function (pool: any, res: any, req: any) {
+export const authSignIn = function (res: any, req: any) {
 
     const selectAccountsQuery = "SELECT username, password FROM accounts"
 
@@ -126,7 +128,7 @@ export const authSignIn = function (pool: any, res: any, req: any) {
 
 }
 
-export const cookieValidation = function (pool: any, res: any, req: any) {
+export const cookieValidation = function (res: any, req: any) {
 
     const selectAccountsQuery = "SELECT username, password FROM accounts"
 
@@ -161,7 +163,7 @@ export const cookieValidation = function (pool: any, res: any, req: any) {
 
 }
 
-export const getUserDetailsByID = function (pool: any, res: any, req: any) {
+export const getUserDetailsByID = function (res: any, req: any) {
 
     const selectAccountsQuery = `SELECT * FROM accounts WHERE id = ?`
 
@@ -187,7 +189,7 @@ export const getUserDetailsByID = function (pool: any, res: any, req: any) {
 
 }
 
-export const getUserID = function (pool: any, res: any, req: any) {
+export const getUserID = function (res: any, req: any) {
 
     const selectAccountsQuery = `SELECT id FROM accounts WHERE username = ?`
 
@@ -213,7 +215,7 @@ export const getUserID = function (pool: any, res: any, req: any) {
 
 }
 
-export const getUserDetails = function (pool: any, res: any, req: any) {
+export const getUserDetails = function (res: any, req: any) {
 
     const selectAccountsQuery = `SELECT * FROM accounts 
         WHERE username = ?
@@ -249,7 +251,7 @@ export const getUserDetails = function (pool: any, res: any, req: any) {
 
 }
 
-export const updateUserDetails = function (pool: any, res: any, req: any) {
+export const updateUserDetails = function (res: any, req: any) {
 
     const updateAllDetailsQuery = `UPDATE accounts
         SET username = ?,
@@ -292,7 +294,7 @@ export const updateUserDetails = function (pool: any, res: any, req: any) {
 
 }
 
-export const getAllUsers = function (pool: any, res: any, req: any) {
+export const getAllUsers = function (res: any, req: any) {
 
     const getAllUsers = `SELECT id, username, gender, country, major, school, createdAt, url, sns FROM accounts`
 
@@ -316,7 +318,7 @@ export const getAllUsers = function (pool: any, res: any, req: any) {
 
 }
 
-export const getUserCommentDetails = function (pool: any, res: any, req: any) {
+export const getUserCommentDetails = function (res: any, req: any) {
 
     const getUserCommentDetails = `SELECT m.id, m.name, COUNT(a.username) AS count FROM comments c
         INNER JOIN majors m on m.id = c.majorID
@@ -347,7 +349,7 @@ export const getUserCommentDetails = function (pool: any, res: any, req: any) {
 
 }
 
-export const getUserReplyDetails = function (pool: any, res: any, req: any) {
+export const getUserReplyDetails = function (res: any, req: any) {
 
     const getUserReplyDetails = `SELECT m.id, m.name, COUNT(a.username) AS count FROM reply r
         INNER JOIN majors m on m.id = r.majorID
@@ -378,7 +380,7 @@ export const getUserReplyDetails = function (pool: any, res: any, req: any) {
 
 }
 
-export const getUserLikeDetails = function (pool: any, res: any, req: any) {
+export const getUserLikeDetails = function (res: any, req: any) {
 
     const getUserLikeDetails = `SELECT m.id, m.name, COUNT(a.username) AS count FROM likes l
         INNER JOIN majors m on m.id = l.majorID
@@ -409,7 +411,7 @@ export const getUserLikeDetails = function (pool: any, res: any, req: any) {
 
 }
 
-export const getTotalAccountCount = function (pool: any, res: any, req: any) {
+export const getTotalAccountCount = function (res: any, req: any) {
 
     const selectCommentsTableQuery = `SELECT COUNT(*) FROM accounts`
 

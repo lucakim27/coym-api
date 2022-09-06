@@ -1,4 +1,6 @@
-export const getMajorList = function (pool: any, res: any, req: any) {
+import { pool } from '../configs/db'
+
+export const getMajorList = function (res: any, req: any) {
 
     const selectMajorsQuery = `SELECT * FROM majors`
 
@@ -22,7 +24,7 @@ export const getMajorList = function (pool: any, res: any, req: any) {
 
 }
 
-export const getMajorName = function (pool: any, res: any, req: any) {
+export const getMajorName = function (res: any, req: any) {
 
     const selectMajorsQuery = `SELECT name FROM majors WHERE id = ?`
 

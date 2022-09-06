@@ -7,4 +7,4 @@ CREATE TABLE likes (
     FOREIGN KEY (commentID) REFERENCES comments(id),
     FOREIGN KEY (majorID) REFERENCES majors(id),
     FOREIGN KEY (userID) REFERENCES accounts(id)
-) 
+);

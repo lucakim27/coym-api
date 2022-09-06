@@ -1,4 +1,6 @@
-export const getModuleList = function (pool: any, res: any, req: any) {
+import { pool } from '../configs/db'
+
+export const getModuleList = function (res: any, req: any) {
 
     const query = `SELECT * FROM modules`
 
@@ -23,7 +25,7 @@ export const getModuleList = function (pool: any, res: any, req: any) {
 }
 
 
-export const getModuleName = function (pool: any, res: any, req: any) {
+export const getModuleName = function (res: any, req: any) {
 
     const selectMajorsQuery = `SELECT name FROM modules WHERE id = ?`
 

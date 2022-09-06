@@ -5,4 +5,4 @@ CREATE TABLE requests (
     content VARCHAR(255) NOT NULL, 
     createdAt DATETIME NOT NULL,
     PRIMARY KEY (id)
-)
+);

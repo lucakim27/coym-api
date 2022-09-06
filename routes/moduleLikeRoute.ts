@@ -1,13 +1,16 @@
-import { getModuleLike, postModuleLike } from '../models/moduleLikeModel'
-import { pool } from '../configs/db'
+import {
+    getModuleLike,
+    postModuleLike
+} from '../models/moduleLikeModel'
 import express from 'express'
-export const router = express.Router()
+const router = express.Router()
+
+router.get('/getModuleLike/:id', (req: any, res: any) => {
+    getModuleLike(res, req)
+})
+
+router.post('/postModuleLike/:id', (req: any, res: any) => {
+    postModuleLike(res, req)
+})
+
 export default router
-
-router.get('/getModuleLike/:id', function (req: any, res: any) {
-    getModuleLike(pool, res, req)
-})
-
-router.post('/postModuleLike/:id', function (req: any, res: any) {
-    postModuleLike(pool, res, req)
-})

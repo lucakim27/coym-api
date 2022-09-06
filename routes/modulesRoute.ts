@@ -1,13 +1,16 @@
-import { getModuleList, getModuleName } from '../models/modulesModel'
-import { pool } from '../configs/db'
+import {
+    getModuleList,
+    getModuleName
+} from '../models/modulesModel'
 import express from 'express'
-export const router = express.Router()
-export default router
+const router = express.Router()
 
-router.get('/getModuleList', function (req: any, res: any) {
-    getModuleList(pool, res, req)
+router.get('/getModuleList', (req: any, res: any) => {
+    getModuleList(res, req)
 })
 
-router.get('/getModuleName/:id', function (req: any, res: any) {
-    getModuleName(pool, res, req)
-  })
+router.get('/getModuleName/:id', (req: any, res: any) => {
+    getModuleName(res, req)
+})
+
+export default router

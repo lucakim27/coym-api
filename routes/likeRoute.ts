@@ -1,21 +1,26 @@
-import { getLike, postLike, getLikeCount, getTotalLikeCount } from '../models/likeModel'
-import { pool } from '../configs/db'
+import {
+  getLike,
+  postLike,
+  getLikeCount,
+  getTotalLikeCount
+} from '../models/likeModel'
 import express from 'express'
-export const router = express.Router()
+const router = express.Router()
+
+router.get('/getLike/:id', (req: any, res: any) => {
+  getLike(res, req)
+})
+
+router.post('/postLike/:id', (req: any, res: any) => {
+  postLike(res, req)
+})
+
+router.get('/getLikeCount', (req: any, res: any) => {
+  getLikeCount(res, req)
+})
+
+router.get('/getTotalLikeCount', (req: any, res: any) => {
+  getTotalLikeCount(res, req)
+})
+
 export default router
-
-router.get('/getLike/:id', function (req: any, res: any) {
-  getLike(pool, res, req)
-})
-
-router.post('/postLike/:id', function (req: any, res: any) {
-  postLike(pool, res, req)
-})
-
-router.get('/getLikeCount', function (req: any, res: any) {
-  getLikeCount(pool, res, req)
-})
-
-router.get('/getTotalLikeCount', function (req: any, res:any) {
-  getTotalLikeCount(pool, res, req)
-})

@@ -1,9 +1,11 @@
-import { getTest } from '../utils/test'
-import { pool } from '../configs/db'
+import {
+    getTest
+} from '../utils/test'
 import express from 'express'
-export const router = express.Router()
-export default router
+const router = express.Router()
 
-router.get('/getTest', function (req: any, res: any) {
-    getTest(pool, res, req)
+router.get('/getTest', (req: any, res: any) => {
+    getTest(res, req)
 })
+
+export default router

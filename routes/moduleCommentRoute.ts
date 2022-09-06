@@ -1,21 +1,26 @@
-import { getModuleComment, postModuleComment, editModuleComment, deleteModuleComment } from '../models/moduleCommentModel'
-import { pool } from '../configs/db'
+import {
+    getModuleComment,
+    postModuleComment,
+    editModuleComment,
+    deleteModuleComment
+} from '../models/moduleCommentModel'
 import express from 'express'
-export const router = express.Router()
+const router = express.Router()
+
+router.get('/getModuleComment/:id', (req: any, res: any) => {
+    getModuleComment(res, req)
+})
+
+router.post('/postModuleComment/:id', (req: any, res: any) => {
+    postModuleComment(res, req)
+})
+
+router.post('/editModuleComment/:id', (req: any, res: any) => {
+    editModuleComment(res, req)
+})
+
+router.post('/deleteModuleComment/:id', (req: any, res: any) => {
+    deleteModuleComment(res, req)
+})
+
 export default router
-
-router.get('/getModuleComment/:id', function (req: any, res: any) {
-    getModuleComment(pool, res, req)
-})
-
-router.post('/postModuleComment/:id', function (req: any, res: any) {
-    postModuleComment(pool, res, req)
-})
-
-router.post('/editModuleComment/:id', function (req: any, res: any) {
-    editModuleComment(pool, res, req)
-})
-
-router.post('/deleteModuleComment/:id', function (req: any, res: any) {
-    deleteModuleComment(pool, res, req)
-})

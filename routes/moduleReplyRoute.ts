@@ -1,21 +1,26 @@
-import { getModuleReply, postModuleReply, editModuleReply, deleteModuleReply } from '../models/moduleReplyModel'
-import { pool } from '../configs/db'
+import {
+    getModuleReply,
+    postModuleReply,
+    editModuleReply,
+    deleteModuleReply
+} from '../models/moduleReplyModel'
 import express from 'express'
-export const router = express.Router()
+const router = express.Router()
+
+router.get('/getModuleReply/:id', (req: any, res: any) => {
+    getModuleReply(res, req)
+})
+
+router.post('/postModuleReply/:id', (req: any, res: any) => {
+    postModuleReply(res, req)
+})
+
+router.post('/deleteModuleReply/:id', (req: any, res: any) => {
+    deleteModuleReply(res, req)
+})
+
+router.post('/editModuleReply/:id', (req: any, res: any) => {
+    editModuleReply(res, req)
+})
+
 export default router
-
-router.get('/getModuleReply/:id', function (req: any, res: any) {
-    getModuleReply(pool, res, req)
-})
-
-router.post('/postModuleReply/:id', function (req: any, res: any) {
-    postModuleReply(pool, res, req)
-})
-
-router.post('/deleteModuleReply/:id', function (req: any, res: any) {
-    deleteModuleReply(pool, res, req)
-})
-
-router.post('/editModuleReply/:id', function (req: any, res: any) {
-    editModuleReply(pool, res, req)
-})
