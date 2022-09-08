@@ -33,7 +33,7 @@ export const addAccount = function (username: any, password: any) {
 }
 
 const validateSignUp = function (username: any, password: any, passwordConfirm: any) {
-    if (username.length < 6 || password.length < 6 || password !== passwordConfirm || username.includes(" ") || password.includes(" ")) {
+    if (username.length < 6 || password !== passwordConfirm || username.includes(" ") || password.includes(" ")) {
         return 1
     } else {
         return 0
