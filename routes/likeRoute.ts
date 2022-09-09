@@ -1,7 +1,6 @@
 import {
   getLike,
   postLike,
-  getLikeCount,
   getTotalLikeCount
 } from '../models/likeModel'
 import express from 'express'
@@ -13,10 +12,6 @@ router.get('/getLike/:id', (req: any, res: any) => {
 
 router.post('/postLike/:id', (req: any, res: any) => {
   postLike(res, req)
-})
-
-router.get('/getLikeCount', (req: any, res: any) => {
-  getLikeCount(res, req)
 })
 
 router.get('/getTotalLikeCount', (req: any, res: any) => {

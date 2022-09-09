@@ -100,33 +100,6 @@ export const getLike = function (res: any, req: any) {
 
 }
 
-export const getLikeCount = function (res: any, req: any) {
-
-    const selectLikesQuery = `SELECT m.name, COUNT(m.name) AS count FROM likes l
-        inner join majors m on m.id = l.majorID
-        GROUP BY m.name
-    `
-
-    pool.getConnection(function (err: any, connection: any) {
-        if (err) {
-            connection.release()
-            throw err
-        }
-        connection.query(selectLikesQuery, function (err: any, result: any, fields: any) {
-            if (err) {
-                connection.release()
-                throw err
-            }
-            res.send({
-                status: true,
-                message: result
-            })
-        })
-        connection.release()
-    })
-
-}
-
 export const getTotalLikeCount = function (res: any, req: any) {
 
     const selectLikesQuery = `SELECT COUNT(*) FROM likes`

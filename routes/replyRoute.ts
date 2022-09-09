@@ -1,7 +1,6 @@
 import {
   getReply,
   postReply,
-  getReplyCount,
   editReply,
   deleteReply,
   getTotalReplyCount
@@ -15,10 +14,6 @@ router.get('/getReply/:id', (req: any, res: any) => {
 
 router.post('/postReply/:id', (req: any, res: any) => {
   postReply(res, req)
-})
-
-router.get('/getReplyCount', (req: any, res: any) => {
-  getReplyCount(res, req)
 })
 
 router.post('/deleteReply/:id', (req: any, res: any) => {
