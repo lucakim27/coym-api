@@ -138,3 +138,27 @@ export const deleteModuleReply = function (res: any, req: any) {
     })
 
 }
+
+export const getTotalModuleReplyCount = function (res: any, req: any) {
+
+    const selectReplyQuery = `SELECT COUNT(*) FROM moduleReply`
+
+    pool.getConnection(function (err: any, connection: any) {
+        if (err) {
+            connection.release()
+            throw err
+        }
+        connection.query(selectReplyQuery, function (err: any, result: any, fields: any) {
+            if (err) {
+                connection.release()
+                throw err
+            }
+            res.send({
+                status: true,
+                message: result
+            })
+        })
+        connection.release()
+    })
+
+}

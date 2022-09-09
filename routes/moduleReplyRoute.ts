@@ -2,7 +2,8 @@ import {
     getModuleReply,
     postModuleReply,
     editModuleReply,
-    deleteModuleReply
+    deleteModuleReply,
+    getTotalModuleReplyCount
 } from '../models/moduleReplyModel'
 import express from 'express'
 const router = express.Router()
@@ -21,6 +22,10 @@ router.post('/deleteModuleReply/:id', (req: any, res: any) => {
 
 router.post('/editModuleReply/:id', (req: any, res: any) => {
     editModuleReply(res, req)
+})
+
+router.get('/getTotalModuleReplyCount', (req: any, res: any) => {
+    getTotalModuleReplyCount(res, req)
 })
 
 export default router

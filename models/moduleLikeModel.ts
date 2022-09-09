@@ -99,3 +99,27 @@ export const getModuleLike = function (res: any, req: any) {
     })
 
 }
+
+export const getTotalModuleLikeCount = function (res: any, req: any) {
+
+    const selectLikesQuery = `SELECT COUNT(*) FROM moduleLikes`
+
+    pool.getConnection(function (err: any, connection: any) {
+        if (err) {
+            connection.release()
+            throw err
+        }
+        connection.query(selectLikesQuery, function (err: any, result: any, fields: any) {
+            if (err) {
+                connection.release()
+                throw err
+            }
+            res.send({
+                status: true,
+                message: result
+            })
+        })
+        connection.release()
+    })
+
+}
