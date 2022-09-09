@@ -2,7 +2,8 @@ import {
     getModuleComment,
     postModuleComment,
     editModuleComment,
-    deleteModuleComment
+    deleteModuleComment,
+    getModuleCommentCount
 } from '../models/moduleCommentModel'
 import express from 'express'
 const router = express.Router()
@@ -21,6 +22,10 @@ router.post('/editModuleComment/:id', (req: any, res: any) => {
 
 router.post('/deleteModuleComment/:id', (req: any, res: any) => {
     deleteModuleComment(res, req)
+})
+
+router.get('/getModuleCommentCount', (req: any, res: any) => {
+    getModuleCommentCount(res, req)
 })
 
 export default router

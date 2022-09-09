@@ -181,3 +181,30 @@ export const deleteModuleComment = function (res: any, req: any) {
     })
 
 }
+
+export const getModuleCommentCount = function (res: any, req: any) {
+
+    const query = `SELECT m.name, COUNT(m.name) AS count FROM moduleComments c
+        inner join modules m on m.id = c.moduleID
+        GROUP BY m.name;
+    `
+
+    pool.getConnection(function (err: any, connection: any) {
+        if (err) {
+            connection.release()
+            throw err
+        }
+        connection.query(query, function (err: any, result: any, fields: any) {
+            if (err) {
+                connection.release()
+                throw err
+            }
+            res.send({
+                status: true,
+                message: result
+            })
+        })
+        connection.release()
+    })
+
+}
