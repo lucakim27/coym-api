@@ -349,54 +349,23 @@ export const getUserCommentDetails = function (res: any, req: any) {
 
 }
 
-export const getUserReplyDetails = function (res: any, req: any) {
+export const getUserModuleCommentDetails = function (res: any, req: any) {
 
-    const getUserReplyDetails = `SELECT m.id, m.name, COUNT(a.username) AS count FROM reply r
-        INNER JOIN majors m on m.id = r.majorID
-        INNER JOIN accounts a on a.id = r.userID
-        WHERE r.userID = ?
+    const query = `SELECT m.id, m.name, COUNT(a.username) AS count FROM moduleComments c
+        INNER JOIN modules m on m.id = c.moduleID
+        INNER JOIN accounts a on a.id = c.userID
+        WHERE c.userID = ?
         GROUP BY m.id
     `
 
-    const paramForGetUserReplyDetails = [req.params.id]
+    const param = [req.params.id]
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
             connection.release()
             throw err
         }
-        connection.query(getUserReplyDetails, paramForGetUserReplyDetails, function (err: any, result: any, fields: any) {
-            if (err) {
-                connection.release()
-                throw err
-            }
-            res.send({
-                status: true,
-                data: result
-            })
-        })
-        connection.release()
-    })
-
-}
-
-export const getUserLikeDetails = function (res: any, req: any) {
-
-    const getUserLikeDetails = `SELECT m.id, m.name, COUNT(a.username) AS count FROM likes l
-        INNER JOIN majors m on m.id = l.majorID
-        INNER JOIN accounts a on a.id = l.userID
-        WHERE l.userID = ?
-        GROUP BY m.id
-    `
-
-    const paramForGetUserLikeDetails = [req.params.id]
-
-    pool.getConnection(function (err: any, connection: any) {
-        if (err) {
-            connection.release()
-            throw err
-        }
-        connection.query(getUserLikeDetails, paramForGetUserLikeDetails, function (err: any, result: any, fields: any) {
+        connection.query(query, param, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
                 throw err

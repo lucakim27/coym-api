@@ -9,8 +9,7 @@ import {
   updateUserDetails,
   getAllUsers,
   getUserCommentDetails,
-  getUserReplyDetails,
-  getUserLikeDetails
+  getUserModuleCommentDetails
 } from '../models/accountModel'
 import express from 'express'
 const router = express.Router()
@@ -43,12 +42,8 @@ router.get('/getUserCommentDetails/:id', (req: any, res: any) => {
   getUserCommentDetails(res, req)
 })
 
-router.get('/getUserReplyDetails/:id', (req: any, res: any) => {
-  getUserReplyDetails(res, req)
-})
-
-router.get('/getUserLikeDetails/:id', (req: any, res: any) => {
-  getUserLikeDetails(res, req)
+router.get('/getUserModuleCommentDetails/:id', (req: any, res: any) => {
+  getUserModuleCommentDetails(res, req)
 })
 
 router.get('/getTotalAccountCount', (req: any, res: any) => {
