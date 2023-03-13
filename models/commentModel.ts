@@ -112,7 +112,7 @@ export const getPopularMajors = function (res: any, req: any) {
 
 export const getRecentComments = function (res: any, req: any) {
 
-    const query =  `SELECT a.id, a.username, c.comment, c.createdAt, c.id AS commentID, m.name FROM comments c
+    const query =  `SELECT a.id, a.username, c.comment, c.createdAt, c.id AS commentID, m.name, m.id AS majorID FROM comments c
         inner join accounts a on a.id = c.userID
         inner join majors m on m.id = c.majorID
         ORDER BY c.createdAt DESC LIMIT 3;
