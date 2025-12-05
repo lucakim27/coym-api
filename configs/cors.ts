@@ -1,5 +1,10 @@
-export const corsOptions = {
-  origin: function (origin, callback) {
+import { CorsOptions } from "cors";
+
+export const corsOptions: CorsOptions = {
+  origin: function (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean) => void
+  ) {
     const allowedOrigins = [
       "http://localhost:3000",
       "http://localhost:8080",
@@ -13,5 +18,5 @@ export const corsOptions = {
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  optionSuccessStatus: 200
+  optionsSuccessStatus: 200 // fix the typo here
 };
