@@ -83,12 +83,21 @@ export const getTotalCommentCount = function (res: any, req: any) {
 
 export const getPopularMajors = function (res: any, req: any) {
 
-    const query = `SELECT m.id, m.name, COUNT(m.name) AS count FROM comments c
-        inner join majors m on m.id = c.majorID
-        GROUP BY m.name
+    // const query = `SELECT m.id, m.name, COUNT(m.name) AS count FROM comments c
+    //     inner join majors m on m.id = c.majorID
+    //     GROUP BY m.name
+    //     ORDER BY count DESC
+    //     LIMIT 3;
+    // `
+
+    const query = `
+        SELECT m.id, m.name, COUNT(*) AS count
+        FROM comments c
+        INNER JOIN majors m ON m.id = c.majorID
+        GROUP BY m.id, m.name
         ORDER BY count DESC
         LIMIT 3;
-    `
+    `;
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
