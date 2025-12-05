@@ -6,6 +6,7 @@ export const pool = mysql2.createPool({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
+    port: Number(process.env.DB_PORT) || 3306,
     enableKeepAlive: true,
     waitForConnections: true
 })
