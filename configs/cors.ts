@@ -1,7 +1,10 @@
-import { CorsOptions } from "cors";
+import express, { Request, Response } from "express";
+import cors, { CorsOptions } from "cors";
 
-export const corsOptions: CorsOptions = {
-  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+const app = express();
+
+const corsOptions: CorsOptions = {
+  origin: (origin, callback) => {
     const allowedOrigins = [
       "http://localhost:3000",
       "http://localhost:8080",
@@ -17,3 +20,9 @@ export const corsOptions: CorsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   optionsSuccessStatus: 200
 };
+
+app.use(cors(corsOptions));
+
+app.options("*", (req: Request, res: Response) => {
+  res.sendStatus(200);
+});
