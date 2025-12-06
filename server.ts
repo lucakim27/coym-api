@@ -17,7 +17,14 @@ const app = express();
 const httpServer = http.createServer(app);
 const PORT = process.env.PORT || 10000;
 
-app.use(cors({ origin: "*" }));
+app.use(cors({
+  origin: [
+    'https://coym.netlify.app',
+    'http://localhost:8888',
+    'http://localhost:8080',
+  ],
+  credentials: true,
+}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
