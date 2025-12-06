@@ -17,7 +17,7 @@ const app = express();
 const httpServer = http.createServer(app);
 const PORT = process.env.PORT || 10000;
 
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
