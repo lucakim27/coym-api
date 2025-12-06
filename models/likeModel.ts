@@ -32,13 +32,14 @@ export const postLike = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectLikesQuery, selectParams, function (err: any, result: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             if (!result.length) {
                 connection.query(insertLikesQuery, insertParams, function (err: any, result: any) {
@@ -64,7 +65,6 @@ export const postLike = function (res: any, req: any) {
                 })
             }
         })
-        connection.release()
     })
 
 }
@@ -82,20 +82,20 @@ export const getLike = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectLikesQuery, paramsForSelectLikesQuery, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
                 message: result
             })
         })
-        connection.release()
     })
 
 }
@@ -106,20 +106,20 @@ export const getTotalLikeCount = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectLikesQuery, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
                 message: result
             })
         })
-        connection.release()
     })
 
 }

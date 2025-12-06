@@ -12,20 +12,20 @@ export const getComment = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(query, param, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
                 message: result
             })
         })
-        connection.release()
     })
 
 }
@@ -39,20 +39,20 @@ export const getCommentCount = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(query, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
                 message: result
             })
         })
-        connection.release()
     })
 
 }
@@ -63,20 +63,20 @@ export const getTotalCommentCount = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(query, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
                 message: result
             })
         })
-        connection.release()
     })
 
 }
@@ -101,20 +101,20 @@ export const getPopularMajors = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(query, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
                 message: result
             })
         })
-        connection.release()
     })
 
 }
@@ -130,19 +130,20 @@ export const getRecentComments = function (res: any, req: any) {
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
             connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(query, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
                 message: result
             })
         })
-        connection.release()
     })
 
 }
@@ -167,19 +168,19 @@ export const postComment = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(query, params, function (err: any, result: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true
             })
         })
-        connection.release()
     })
 
 }
@@ -202,13 +203,14 @@ export const editComment = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectQuery, param, function (err: any, result: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             var existing = false
             for (var i = 0; i < result.length; i++) {
@@ -231,7 +233,6 @@ export const editComment = function (res: any, req: any) {
                 })
             }
         })
-        connection.release()
     })
 
 }
@@ -258,14 +259,14 @@ export const deleteComment = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
-
         connection.query(selectQuery, param, function (err: any, result: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
 
             if (result.length !== 0) {
@@ -294,7 +295,5 @@ export const deleteComment = function (res: any, req: any) {
                 })
             }
         })
-        connection.release()
     })
-
 }

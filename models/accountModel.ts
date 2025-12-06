@@ -18,16 +18,16 @@ export const addAccount = function (username: any, password: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(insertAccountsQuery, paramsForInsertAccountsQuery, function (err: any, result: any) {
+            connection.release()
             if (err) {
-                connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
         })
-        connection.release()
     })
 
 }
@@ -52,13 +52,14 @@ export const authSignUp = function (res: any, req: any) {
     } else {
         pool.getConnection(function (err: any, connection: any) {
             if (err) {
-                connection.release()
-                throw err
+                console.error('DB connection error:', err);
+                return;
             }
             connection.query(selectAccountsQuery, function (err: any, result: any, fields: any) {
                 if (err) {
                     connection.release()
-                    throw err
+                    console.error('Query error:', err);
+                    return;
                 }
                 if (result.length !== 0) {
                     var existing = false
@@ -86,7 +87,6 @@ export const authSignUp = function (res: any, req: any) {
                     })
                 }
             })
-            connection.release()
         })
 
     }
@@ -98,13 +98,14 @@ export const authSignIn = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectAccountsQuery, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             var existing = false
             for (var i = 0; i < result.length; i++) {
@@ -123,7 +124,6 @@ export const authSignIn = function (res: any, req: any) {
                 })
             }
         })
-        connection.release()
     })
 
 }
@@ -135,12 +135,14 @@ export const cookieValidation = function (res: any, req: any) {
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
             connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectAccountsQuery, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             var existing = false
             for (var i = 0; i < result.length; i++) {
@@ -158,7 +160,6 @@ export const cookieValidation = function (res: any, req: any) {
                 })
             }
         })
-        connection.release()
     })
 
 }
@@ -171,20 +172,20 @@ export const getUserDetailsByID = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectAccountsQuery, paramsForSelectAccountsQuery, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
                 data: { username: result[0] }
             })
         })
-        connection.release()
     })
 
 }
@@ -197,20 +198,20 @@ export const getUserID = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectAccountsQuery, paramsForSelectAccountsQuery, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
                 data: { id: result[0] }
             })
         })
-        connection.release()
     })
 
 }
@@ -225,13 +226,14 @@ export const getUserDetails = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectAccountsQuery, paramsForSelectAccountsQuery, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
@@ -269,13 +271,14 @@ export const updateUserDetails = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(updateAllDetailsQuery, paramsForUpdateAllDetailsQuery, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             if (result.changedRows === 0) {
                 res.send({
@@ -289,7 +292,6 @@ export const updateUserDetails = function (res: any, req: any) {
                 })
             }
         })
-        connection.release()
     })
 
 }
@@ -300,20 +302,20 @@ export const getAllUsers = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(getAllUsers, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
                 data: result
             })
         })
-        connection.release()
     })
 
 }
@@ -331,20 +333,20 @@ export const getUserCommentDetails = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(getUserCommentDetails, paramForGetUserCommentDetails, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
                 data: result
             })
         })
-        connection.release()
     })
 
 }
@@ -362,20 +364,20 @@ export const getUserModuleCommentDetails = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(query, param, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
                 data: result
             })
         })
-        connection.release()
     })
 
 }
@@ -386,20 +388,20 @@ export const getTotalAccountCount = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectCommentsTableQuery, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
                 message: result
             })
         })
-        connection.release()
     })
 
 }

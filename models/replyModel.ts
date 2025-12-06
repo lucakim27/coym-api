@@ -13,20 +13,20 @@ export const getReply = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectReplyQuery, paramsForSelectReplyQuery, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({ 
                 status: true, 
                 message: result 
             })
         })
-        connection.release()
     })
 
 }
@@ -37,20 +37,20 @@ export const getTotalReplyCount = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectReplyQuery, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true,
                 message: result
             })
         })
-        connection.release()
     })
 
 }
@@ -77,20 +77,20 @@ export const postReply = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(insertReplyQuery, paramsForInsertReplyQuery, function (err: any, result: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({ 
                 status: true, 
                 message: 'You have successfully replied.'
             })
-        }) 
-        connection.release()
+        })
     })
 
 }
@@ -107,19 +107,19 @@ export const editReply = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(updateCommentsQuery, paramsForUpdateCommentsQuery, function (err: any, result: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({
                 status: true
             })
-        })   
-        connection.release()
+        })
     })
 
 }
@@ -138,19 +138,21 @@ export const deleteReply = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectCommentsTableQuery, replyParam, function (err: any, result: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             if (result.length === 1) {
                 connection.query(deleteCommentQuery, replyParam, function (err: any, result: any) {
                     if (err) {
                         connection.release()
-                        throw err
+                        console.error('Query error:', err);
+                        return;
                     }
                     res.send({
                         status: true
@@ -158,7 +160,6 @@ export const deleteReply = function (res: any, req: any) {
                 })
             }
         })
-        connection.release()
     })
 
 }

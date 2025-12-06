@@ -6,20 +6,20 @@ export const getMajorList = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectMajorsQuery, function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({ 
                 status: true, 
                 message: result 
             })
         })
-        connection.release()
     })
 
 }
@@ -32,20 +32,20 @@ export const getMajorName = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(selectMajorsQuery, param,  function (err: any, result: any, fields: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({ 
                 status: true, 
                 message: result
             })
         })
-        connection.release()
     })
 
 }

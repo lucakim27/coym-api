@@ -20,20 +20,20 @@ export const postRequest = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
-            throw err
+            console.error('DB connection error:', err);
+            return;
         }
         connection.query(insertRequestQuery, paramsForInsertRequestQuery, function (err: any, result: any) {
             if (err) {
                 connection.release()
-                throw err
+                console.error('Query error:', err);
+                return;
             }
             res.send({ 
                 status: true, 
                 message: 'You have successfully requested.' 
             })
         })
-        connection.release()
     })
 
 }
