@@ -17,8 +17,8 @@ export const getReply = function (res: any, req: any) {
             return;
         }
         connection.query(selectReplyQuery, paramsForSelectReplyQuery, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -41,8 +41,8 @@ export const getTotalReplyCount = function (res: any, req: any) {
             return;
         }
         connection.query(selectReplyQuery, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -81,8 +81,8 @@ export const postReply = function (res: any, req: any) {
             return;
         }
         connection.query(insertReplyQuery, paramsForInsertReplyQuery, function (err: any, result: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -111,8 +111,8 @@ export const editReply = function (res: any, req: any) {
             return;
         }
         connection.query(updateCommentsQuery, paramsForUpdateCommentsQuery, function (err: any, result: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -142,15 +142,15 @@ export const deleteReply = function (res: any, req: any) {
             return;
         }
         connection.query(selectCommentsTableQuery, replyParam, function (err: any, result: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
             if (result.length === 1) {
                 connection.query(deleteCommentQuery, replyParam, function (err: any, result: any) {
+                    connection.release()
                     if (err) {
-                        connection.release()
                         console.error('Query error:', err);
                         return;
                     }

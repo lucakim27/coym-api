@@ -56,8 +56,8 @@ export const authSignUp = function (res: any, req: any) {
                 return;
             }
             connection.query(selectAccountsQuery, function (err: any, result: any, fields: any) {
+                connection.release()
                 if (err) {
-                    connection.release()
                     console.error('Query error:', err);
                     return;
                 }
@@ -102,8 +102,8 @@ export const authSignIn = function (res: any, req: any) {
             return;
         }
         connection.query(selectAccountsQuery, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -134,13 +134,12 @@ export const cookieValidation = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
             console.error('DB connection error:', err);
             return;
         }
         connection.query(selectAccountsQuery, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -176,8 +175,8 @@ export const getUserDetailsByID = function (res: any, req: any) {
             return;
         }
         connection.query(selectAccountsQuery, paramsForSelectAccountsQuery, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -202,8 +201,8 @@ export const getUserID = function (res: any, req: any) {
             return;
         }
         connection.query(selectAccountsQuery, paramsForSelectAccountsQuery, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -230,8 +229,8 @@ export const getUserDetails = function (res: any, req: any) {
             return;
         }
         connection.query(selectAccountsQuery, paramsForSelectAccountsQuery, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -248,7 +247,6 @@ export const getUserDetails = function (res: any, req: any) {
                 }
             })
         })
-        connection.release()
     })
 
 }
@@ -275,8 +273,8 @@ export const updateUserDetails = function (res: any, req: any) {
             return;
         }
         connection.query(updateAllDetailsQuery, paramsForUpdateAllDetailsQuery, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -306,8 +304,8 @@ export const getAllUsers = function (res: any, req: any) {
             return;
         }
         connection.query(getAllUsers, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -337,8 +335,8 @@ export const getUserCommentDetails = function (res: any, req: any) {
             return;
         }
         connection.query(getUserCommentDetails, paramForGetUserCommentDetails, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -368,8 +366,8 @@ export const getUserModuleCommentDetails = function (res: any, req: any) {
             return;
         }
         connection.query(query, param, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -392,8 +390,8 @@ export const getTotalAccountCount = function (res: any, req: any) {
             return;
         }
         connection.query(selectCommentsTableQuery, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }

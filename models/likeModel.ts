@@ -36,15 +36,15 @@ export const postLike = function (res: any, req: any) {
             return;
         }
         connection.query(selectLikesQuery, selectParams, function (err: any, result: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
             if (!result.length) {
                 connection.query(insertLikesQuery, insertParams, function (err: any, result: any) {
+                    connection.release()
                     if (err) {
-                        connection.release()
                         throw err
                     }
                     res.send({
@@ -54,8 +54,8 @@ export const postLike = function (res: any, req: any) {
                 })
             } else {
                 connection.query(deleteLikesColumnQuery, selectParams, function (err: any, result: any) {
+                    connection.release()
                     if (err) {
-                        connection.release()
                         throw err
                     }
                     res.send({
@@ -86,8 +86,8 @@ export const getLike = function (res: any, req: any) {
             return;
         }
         connection.query(selectLikesQuery, paramsForSelectLikesQuery, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -110,8 +110,8 @@ export const getTotalLikeCount = function (res: any, req: any) {
             return;
         }
         connection.query(selectLikesQuery, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }

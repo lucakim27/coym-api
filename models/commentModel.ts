@@ -16,8 +16,8 @@ export const getComment = function (res: any, req: any) {
             return;
         }
         connection.query(query, param, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -43,8 +43,8 @@ export const getCommentCount = function (res: any, req: any) {
             return;
         }
         connection.query(query, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -67,8 +67,8 @@ export const getTotalCommentCount = function (res: any, req: any) {
             return;
         }
         connection.query(query, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -105,8 +105,8 @@ export const getPopularMajors = function (res: any, req: any) {
             return;
         }
         connection.query(query, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -129,13 +129,12 @@ export const getRecentComments = function (res: any, req: any) {
 
     pool.getConnection(function (err: any, connection: any) {
         if (err) {
-            connection.release()
             console.error('DB connection error:', err);
             return;
         }
         connection.query(query, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -172,8 +171,8 @@ export const postComment = function (res: any, req: any) {
             return;
         }
         connection.query(query, params, function (err: any, result: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -207,8 +206,8 @@ export const editComment = function (res: any, req: any) {
             return;
         }
         connection.query(selectQuery, param, function (err: any, result: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -223,8 +222,8 @@ export const editComment = function (res: any, req: any) {
             }
             if (!existing) {
                 connection.query(updateQuery, params, function (err: any, result: any) {
+                    connection.release()
                     if (err) {
-                        connection.release()
                         throw err
                     }
                     res.send({
@@ -263,30 +262,30 @@ export const deleteComment = function (res: any, req: any) {
             return;
         }
         connection.query(selectQuery, param, function (err: any, result: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
 
             if (result.length !== 0) {
                 connection.query(deleteLikesQuery, param, function (err: any, result: any) {
+                    connection.release()
                     if (err) {
-                        connection.release()
                         throw err
                     }
                 })
         
                 connection.query(deleteRepliesQuery, param, function (err: any, result: any) {
+                    connection.release()
                     if (err) {
-                        connection.release()
                         throw err
                     }
                 })
         
                 connection.query(deleteCommentQuery, param, function (err: any, result: any) {
+                    connection.release()
                     if (err) {
-                        connection.release()
                         throw err
                     }
                     res.send({

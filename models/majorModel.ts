@@ -10,8 +10,8 @@ export const getMajorList = function (res: any, req: any) {
             return;
         }
         connection.query(selectMajorsQuery, function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
@@ -36,8 +36,8 @@ export const getMajorName = function (res: any, req: any) {
             return;
         }
         connection.query(selectMajorsQuery, param,  function (err: any, result: any, fields: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }

@@ -24,8 +24,8 @@ export const postRequest = function (res: any, req: any) {
             return;
         }
         connection.query(insertRequestQuery, paramsForInsertRequestQuery, function (err: any, result: any) {
+            connection.release()
             if (err) {
-                connection.release()
                 console.error('Query error:', err);
                 return;
             }
