@@ -2,8 +2,8 @@ import http from "http";
 import express from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-// import cors from "cors";
-// import { corsOptions } from "./configs/cors";
+import cors from "cors";
+import { corsOptions } from "./configs/cors";
 
 import accountRouter from "./routes/accountRoute";
 import commentRouter from "./routes/commentRoute";
@@ -17,7 +17,8 @@ const app = express();
 const httpServer = http.createServer(app);
 const PORT = process.env.PORT || 3000;
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
+// app.options("*", cors(corsOptions)); // pre-flight for all routes
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
